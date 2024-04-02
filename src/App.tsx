@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 
 interface Widget {
-    settings: Settings[],
+    settings: Setting[],
     code: string
 }
 
@@ -23,19 +23,19 @@ const WidgetEditor: React.FC = () => {
     </div>
 }
 
-type Settings = 'a' | 'b'
+type Setting = 'a' | 'b'
 
 interface SettingsProps {
-    settings: Settings[]
-    onChange: (settings: Settings[]) => void
+    settings: Setting[]
+    onChange: (settings: Setting[]) => void
 }
 
 const Settings: React.FC<SettingsProps> = ({settings, onChange}) => {
     return <div>
-        {['a', 'b'].map(s => {
+        {['a', 'b'].map((s) => {
             return <div key={s}>
                 <input id={s} type={'checkbox'} name={s} value={s} checked={settings.includes(s)}
-                       onChange={e => onChange(settings.includes(s) ? settings.filter(c => s !== c) : [...settings, s])}
+                       onChange={() => onChange(settings.includes(s) ? settings.filter(c => s !== c) : [...settings, s])}
                 />
                 <label htmlFor={s}>{s}</label>
             </div>
