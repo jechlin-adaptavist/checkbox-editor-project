@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import MonacoEditor, {monaco} from "react-monaco-editor";
 
 interface Widget {
     settings: Setting[],
@@ -10,6 +11,7 @@ const WidgetEditor: React.FC = () => {
     const [widget, setWidget] = useState<Widget>({settings: [], code: ''})
 
     return <div>
+        <h2>Widget</h2>
         <pre style={{minHeight: 200}}>{JSON.stringify(widget, null, 2)}</pre>
         <Settings
             settings={widget.settings}
@@ -17,6 +19,11 @@ const WidgetEditor: React.FC = () => {
         />
 
         <TextEditor
+            value={widget.code}
+            onChange={s => setWidget({...widget, code: s})}
+        />
+
+        <CodeEditor
             value={widget.code}
             onChange={s => setWidget({...widget, code: s})}
         />
@@ -32,6 +39,7 @@ interface SettingsProps {
 
 const Settings: React.FC<SettingsProps> = ({settings, onChange}) => {
     return <div>
+        <h2>Checkboxes</h2>
         {['a', 'b'].map((s) => {
             return <div key={s}>
                 <input id={s} type={'checkbox'} name={s} value={s} checked={settings.includes(s)}
@@ -51,12 +59,24 @@ interface TextEditorProps {
 
 const TextEditor: React.FC<TextEditorProps> = ({value, onChange}) => {
     return <div>
+        <h2>Text</h2>
         <textarea
             value={value}
             onChange={(e) => onChange(e.target.value)}
             className={"w-full h-64"}
         />
 
+    </div>
+}
+
+const CodeEditor: React.FC<TextEditorProps> = ({value, onChange}) => {
+    return <div>
+        <h2>Monaco</h2>
+        <MonacoEditor
+            height={200}
+            value={value}
+            onChange={onChange}
+        />
     </div>
 }
 
