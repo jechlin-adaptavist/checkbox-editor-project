@@ -8,7 +8,7 @@ interface Widget {
 
 const WidgetEditor: React.FC = () => {
 
-    const [widget, setWidget] = useState<Widget>({settings: [], code: ''})
+    const [widget, setWidget] = useState<Widget>({settings: ['b'], code: ''})
 
     return <div>
         <h2>Widget</h2>
@@ -20,12 +20,12 @@ const WidgetEditor: React.FC = () => {
 
         <TextEditor
             value={widget.code}
-            onChange={s => setWidget({...widget, code: s})}
+            onChange={code => setWidget({...widget, code})}
         />
 
         <CodeEditor
             value={widget.code}
-            onChange={s => setWidget({...widget, code: s})}
+            onChange={code => setWidget({...widget, code})}
         />
     </div>
 }
